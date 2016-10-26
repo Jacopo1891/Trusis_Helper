@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             trusis-helper
 // @name           TRUSIS HELP: Mentire è solo l'inizio
-// @version        0.11
+// @version        0.12
 // @namespace
 // @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS%20HELP-%20Mentire%20%C3%A8%20solo%20l'inizio.user.js
 // @downloadURL    https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS%20HELP-%20Mentire%20%C3%A8%20solo%20l'inizio.user.js
@@ -115,7 +115,7 @@ function sceltaRuolo(){
 
 function createLink(n){
     // Dato il ruolo restituisce il link all'immagine
-    var link = "css/images/symbols/card/"+n+".png";
+    var link = "css/images/symbols/card"+n+".png";
     return link;
 }
 
