@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             trusis-helper
 // @name           TRUSIS HELP: Mentire è solo l'inizio
-// @version        0.12
+// @version        0.13
 // @namespace
 // @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS%20HELP-%20Mentire%20%C3%A8%20solo%20l'inizio.user.js
 // @downloadURL    https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS%20HELP-%20Mentire%20%C3%A8%20solo%20l'inizio.user.js
@@ -27,9 +27,19 @@ function trusis_helper() {
         trusis_helper_list.push(temp_list);
     }else{
         var trusis_helper_list_temp =  $.parseJSON( trusis_helper_list );
-        trusis_helper_list = trusis_helper_list_temp;
-        if (temp_list[1] === trusis_helper_list[0][1]){
+        if (temp_list[1] === trusis_helper_list_temp[0][1]){
+            trusis_helper_list = trusis_helper_list_temp;
             restoreRole(trusis_helper_list);
+        }else{
+            var cancVecchiaPartita = confirm("Trusis_Helper:\nVuoi cancellare i dati della precedente partita? \n(Consigliato se si inizia una nuova)");
+            if(cancVecchiaPartita === true){
+                trusis_helper_list = [];
+                trusis_helper_list.push(temp_list);
+                saveCookie(trusis_helper_list);
+            }
+            if(cancVecchiaPartita === false){
+                alert("I ruoli inseriti in questa partita saranno ignorati.");
+            }
         }
     }
 
