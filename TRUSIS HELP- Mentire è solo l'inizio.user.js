@@ -1,10 +1,10 @@
 // ==UserScript==
 // @id             trusis-helper
 // @name           TRUSIS HELP: Mentire è solo l'inizio
-// @version        0.1
-// @namespace      
-// @updateURL      
-// @downloadURL    
+// @version        0.11
+// @namespace
+// @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS%20HELP-%20Mentire%20%C3%A8%20solo%20l'inizio.user.js
+// @downloadURL    https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS%20HELP-%20Mentire%20%C3%A8%20solo%20l'inizio.user.js
 // @description    [Jacopo1891] Helper per Trusis
 // @include        https://trusis.altervista.org/*
 // @include        http://trusis.altervista.org/*
@@ -30,7 +30,7 @@ function trusis_helper() {
         trusis_helper_list = trusis_helper_list_temp;
         if (temp_list[1] === trusis_helper_list[0][1]){
             restoreRole(trusis_helper_list);
-        }  
+        }
     }
 
     document.body.onclick = function(e) {   //Document body clicked
@@ -41,7 +41,7 @@ function trusis_helper() {
             e = e.target;                   //e = elemento cliccato
         }
 
-        if (e.className && e.className.indexOf('avatar_name') != -1) {                 
+        if (e.className && e.className.indexOf('avatar_name') != -1) {
             var nickClicked = $(e).children('a').text();
 
             // Lista di tutti gli elementi con la classe 'avatar_name'
@@ -115,7 +115,7 @@ function sceltaRuolo(){
 
 function createLink(n){
     // Dato il ruolo restituisce il link all'immagine
-    var link = "css/images/characters/"+n+".png";
+    var link = "css/images/symbols/card/"+n+".png";
     return link;
 }
 
