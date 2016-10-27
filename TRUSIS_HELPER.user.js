@@ -3,8 +3,8 @@
 // @name           TRUSIS HELP: Mentire è solo l'inizio
 // @version        0.14
 // @namespace
-// @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.js
-// @downloadURL    https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.js
+// @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
+// @downloadURL    https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
 // @description    [Jacopo1891] Helper per Trusis
 // @include        https://trusis.altervista.org/*
 // @include        http://trusis.altervista.org/*
