@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             trusis-helper
 // @name           TRUSIS HELPER: Mentire è solo l'inizio (www.trusis.it)
-// @version        0.14
+// @version        0.141
 // @namespace
 // @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
 // @downloadURL    https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
@@ -61,15 +61,13 @@ function trusis_helper() {
             // Lista di tutti gli elementi con la classe 'avatar_name'
             var lista = document.getElementsByClassName('avatar');
             for (var i = 0; i < lista.length; i++) {
-                tempCard = lista[i].getElementsByClassName('avatar_name');
-                tempNick = $(tempCard).children('a.nowrap').text();
+                var tempCard = lista[i].getElementsByClassName('avatar_name');
+                var tempNick = $(tempCard).children('a.nowrap').text();
                 var nickname = tempNick;
                 if (nickname == nickClicked){
                     var ruolo = sceltaRuolo();
-                    var htmlImgLink = createHtmlImgCode(ruolo);
                     // Setto la card
-                    var tempLocationCard = $(tempCard).parent().children('div.cardfg, div.cardfggy');
-                    $(tempLocationCard).append(htmlImgLink);
+                    addRolePlayer(tempCard, ruolo);
                     // Aggiorno la lista dei player "etichettati"
                     var temp_list = [nickname , ruolo];
                     trusis_helper_list = addToCookieList (trusis_helper_list, temp_list);
@@ -182,10 +180,8 @@ function restoreRole( lista_ruoli_cookie ){
             var nickname = tempNick;
             if (nickname == temp[0]){
                 var ruolo = temp[1];
-                var htmlImgLink = createHtmlImgCode(ruolo);
                 // Setto la card
-                var tempLocationCard = $(tempCard).parent().children('div.cardfg, div.cardfggy');
-                $(tempLocationCard).append(htmlImgLink);
+                addRolePlayer(tempCard, ruolo);
             }
         }
     }
@@ -200,4 +196,14 @@ function removePlayer(list, nick){
         }
     }
     return list;
+}
+
+function addRolePlayer(playerHtmlElement, ruolo){
+    var htmlImgLink = createHtmlImgCode(ruolo);
+    var tempLocationCard = $(playerHtmlElement).parent().children('div.cardfg, div.cardfggy');
+    if (typeof tempLocationCard !== "undefined"){
+        $(tempLocationCard).append(htmlImgLink);
+    }else{
+        console.log("Errore: impossibile aggiungere il ruolo.");
+    }
 }
