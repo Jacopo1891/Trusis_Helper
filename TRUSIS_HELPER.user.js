@@ -223,7 +223,7 @@ function html_note_code( player_code ){
     + '<tbody>'
     + '<tr>'
     + '<td class="home_tl"></td>'
-    + '<td class="home_t"><img id="helper_note" src="css/images/game/home.png" /></td>'
+    + '<td class="home_t"><img id="helper_note" src="https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/home_helper.png" /></td>'
     + '<td class="home_tr"></td>'
     + '</tr>'
     + '<tr>'
