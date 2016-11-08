@@ -11,3 +11,8 @@ Installazione
 - Installare su Tampermonkey Trusis_Helper ( <a class="minibutton" href="https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js">Clicca qui</a> )
 
 ** Se al momento della ricerca di una partita non si visualizza l'elenco disabilitare temporaneamente il plugin da Tampermonkey.
+
+Changelog
+-------
+
+- v 0.15 Finestra per le note personalizzate
