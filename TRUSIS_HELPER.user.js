@@ -219,15 +219,23 @@ function addRolePlayer(playerHtmlElement, ruolo){
 }
 
 function html_note_code( player_code ){
+    var htl_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/htl.png";
+    var ht_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/ht.png";
+    var htr_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/htr.png";
+    var hr_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/hr.png";
+    var hbl_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/hbl.png";
+    var hb_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/hb.png";
+    var hbr_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/hbr.png";
+
     var html_code = '<table class="home_helper">'
     + '<tbody>'
     + '<tr>'
-    + '<td class="home_tl"></td>'
-    + '<td class="home_t"><img id="helper_note" src="https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/home_helper.png" /></td>'
-    + '<td class="home_tr"></td>'
+    + '<td class="home_tl" style="background: url('+htl_link+');"></td>'
+    + '<td class="home_t" style="background: url('+ht_link+');"><img id="helper_note" src="https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/home_helper.png" /></td>'
+    + '<td class="home_tr" style="background: url('+htr_link+');"></td>'
     + '</tr>'
     + '<tr>'
-    + '<td class="home_l"></td>'
+    + '<td class="home_l" style="background: url('+hl_link+');"></td>'
     + '<th class="home_c">'
     + '<div class="home_helper_element" style="display: none;">'
     + player_code
@@ -235,14 +243,14 @@ function html_note_code( player_code ){
     +'<button style="margin: 0 auto; border-radius:6px; width:100px; background-color: #112; color: #AEAEAE; border: 0; padding: 4px 7px; text-align:center;" id="save_note_helper">Salva</button></div>'
     +'</div>'
     +'</th>'
-    +'<td class="home_r"></td>'
+    +'<td class="home_r" style="background: url('+hr_link+');"></td>'
     +'</tr>'
     +'<tr></tr>'
     +'<tr>'
-    +'<td class="home_bl"></td>'
-    +'<td class="home_b" style="text-align:right">'
+    +'<td class="home_bl" style="background: url('+hbl_link+');"></td>'
+    +'<td class="home_b" style="text-align:right; background: url('+hb_link+');">'
     +'</td>'
-    +'<td class="home_br"></td>'
+    +'<td class="home_br" style="background: url('+hbr_link+');"></td>'
     +'</tr>'
     +'</tbody>'
     +'</table>';

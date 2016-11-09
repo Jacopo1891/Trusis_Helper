@@ -15,4 +15,5 @@ Installazione
 Changelog
 -------
 
+- v 0.151 Nuovi colori nel pannello note
 - v 0.15 Finestra per le note personalizzate
