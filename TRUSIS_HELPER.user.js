@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             trusis-helper
 // @name           TRUSIS HELPER: Mentire è solo l'inizio (www.trusis.it)
-// @version        0.151
+// @version        0.152
 // @namespace
 // @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
 // @downloadURL    https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
@@ -222,6 +222,7 @@ function html_note_code( player_code ){
     var htl_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/htl.png";
     var ht_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/ht.png";
     var htr_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/htr.png";
+    var hl_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/hl.png";
     var hr_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/hr.png";
     var hbl_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/hbl.png";
     var hb_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/hb.png";
