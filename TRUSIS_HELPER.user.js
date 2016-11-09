@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             trusis-helper
 // @name           TRUSIS HELPER: Mentire è solo l'inizio (www.trusis.it)
-// @version        0.153
+// @version        0.154
 // @namespace
 // @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
 // @downloadURL    https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
