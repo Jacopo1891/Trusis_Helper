@@ -191,7 +191,9 @@ function restoreRole( lista_ruoli_cookie ){
             if (nickname == temp[0]){
                 var ruolo = temp[1];
                 // Setto la card
-                addRolePlayer(tempCard, ruolo);
+                if (ruolo != ""){
+                    addRolePlayer(tempCard, ruolo);
+                }
             }
         }
     }

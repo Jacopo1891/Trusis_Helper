@@ -14,6 +14,7 @@ Installazione
 
 Changelog
 -------
+- v 0.154 Fix ruolo anteprima giocatore
 - v 0.153 Img fix
 - v 0.152 Bug fix
 - v 0.151 Nuovi colori nel pannello note
