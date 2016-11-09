@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             trusis-helper
 // @name           TRUSIS HELPER: Mentire è solo l'inizio (www.trusis.it)
-// @version        0.152
+// @version        0.153
 // @namespace
 // @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
 // @downloadURL    https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
@@ -231,9 +231,9 @@ function html_note_code( player_code ){
     var html_code = '<table class="home_helper">'
     + '<tbody>'
     + '<tr>'
-    + '<td class="home_tl" style="background: url('+htl_link+');"></td>'
-    + '<td class="home_t" style="background: url('+ht_link+');"><img id="helper_note" src="https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/home_helper.png" /></td>'
-    + '<td class="home_tr" style="background: url('+htr_link+');"></td>'
+    + '<td class="home_tl" style="background: url('+htl_link+') no-repeat left bottom;"></td>'
+    + '<td class="home_t" style="background: url('+ht_link+') repeat-x left bottom;"><img id="helper_note" src="https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/home_helper.png" /></td>'
+    + '<td class="home_tr" style="background: url('+htr_link+') no-repeat right bottom;"></td>'
     + '</tr>'
     + '<tr>'
     + '<td class="home_l" style="background: url('+hl_link+');"></td>'
@@ -248,10 +248,10 @@ function html_note_code( player_code ){
     +'</tr>'
     +'<tr></tr>'
     +'<tr>'
-    +'<td class="home_bl" style="background: url('+hbl_link+');"></td>'
-    +'<td class="home_b" style="text-align:right; background: url('+hb_link+');">'
+    +'<td class="home_bl" style="background: url('+hbl_link+') no-repeat left top;"></td>'
+    +'<td class="home_b" style="text-align:right; background: url('+hb_link+') repeat-x left top;">'
     +'</td>'
-    +'<td class="home_br" style="background: url('+hbr_link+');"></td>'
+    +'<td class="home_br" style="background: url('+hbr_link+') no-repeat right top;"></td>'
     +'</tr>'
     +'</tbody>'
     +'</table>';
