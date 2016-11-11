@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             trusis-helper
 // @name           TRUSIS HELPER: Mentire è solo l'inizio (www.trusis.it)
-// @version        0.154
+// @version        0.155
 // @namespace
 // @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
 // @downloadURL    https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
@@ -57,9 +57,9 @@ $(window).on("load", function() {
             document.getElementById("save_note_helper").innerHTML="Salvato!";
             setTimeout(function(){
                 document.getElementById("save_note_helper").innerHTML="Salva";
-            },5000);
+            },3500);
             // Salvo sui Cookie
-                    saveCookie(trusis_helper_list);
+            saveCookie(trusis_helper_list);
         }
     }
 });
@@ -266,8 +266,16 @@ function trusis_helper_note( l ){
     // Lista di tutti gli elementi con la classe 'avatar_name'
     var lista = document.getElementsByClassName('avatar');
     var stringHtml = "";
+    var first_dead = "";
     for (var i = 0; i < lista.length; i++) {
         var tempCard = lista[i].getElementsByClassName('avatar_name');
+        var cimitero = $(tempCard).parent().hasClass( "avatar_dead" );
+        if (cimitero === true && first_dead == ""){
+            stringHtml += '<div style="display: flex; flex-grow:1; width:100%; list-style-type:none;">'
+                +'<li style="text-align: center; margin-left: 40%; ">! ---- Cimitero ---- !</li>'
+                +'</div>';
+            first_dead = "found";
+        }
         var tempNick = $(tempCard).children('a.nowrap').text();
         var note = "";
             for(var j = 0; j < l.length; j++){
@@ -276,13 +284,14 @@ function trusis_helper_note( l ){
                     break;
                 }
             }
+
         stringHtml += '<div style="display: flex; flex-grow: 1; width: 100%; list-style-type: none;">'
-            +'<li style="flex-grow: 1; vertical-align:middle; padding-left:10px; width: 30px;">'
+            +'<li style="flex-grow: 1; vertical-align:middle; padding-left:10px; padding-top:10px; width: 30px;">'
             + tempNick
             +'</li><li style="flex-grow: 3; vertical-align:middle; padding-left:10px; padding-right: 20px;">'
             +'<textarea class="trusis_helper_note" id="'
             + tempNick
-            + '" style="resize:none; width: 100%; border-radius: 10px; background-color: #346;text-align: center; color: #CDF;">'
+            + '" style="resize:none; width: 100%; border-radius: 10px; background-color: #346; padding-left: 10px; color: #CDF; margin: 0px 0px -20px 0px;">'
             + note
             + '</textarea></li></div><br>';
     }
