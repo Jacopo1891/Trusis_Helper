@@ -13,8 +13,7 @@ Installazione
 ** Se al momento della ricerca di una partita non si visualizza l'elenco disabilitare temporaneamente il plugin da Tampermonkey.
 
 ChangeLog
---------
-- v 0.156 Bug fix alle note, fix ruolo
+-------
 - v 0.155 Miglioramenti alle note
 - v 0.154 Fix ruolo anteprima giocatore
 - v 0.153 Img fix
