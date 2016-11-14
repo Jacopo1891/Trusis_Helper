@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             trusis-helper
 // @name           TRUSIS HELPER: Mentire è solo l'inizio (www.trusis.it)
-// @version        0.156
+// @version        0.16
 // @author         Jacopo1891
 // @namespace
 // @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
@@ -61,6 +61,29 @@ $(window).on("load", function() {
             },3500);
             // Salvo sui Cookie
             saveCookie(trusis_helper_list);
+        }
+        if (e.id == "export_note_helper"){
+            var temp_note_export = export_trusis_helper_note( trusis_helper_list );
+            var w = 400;
+            var h = 250;
+            var l = Math.floor((screen.width-w)/2);
+            var t = Math.floor((screen.height-h)/2);
+            var stili = "top=10, left=10, width="+w+", height="+h+",top=" + t + ",left=" + l +" status=no, menubar=no, toolbar=no scrollbars=no";
+            var testo = window.open("", "", stili);
+
+            testo.document.write("<html>");
+            testo.document.write("<head>");
+            testo.document.write("<title>Trusis_Helper - Note</title>");
+            testo.document.write("</head>");
+            testo.document.write("<body topmargin=5>");
+            testo.document.write("<div align=center><b>Note esportate:</b></div>\n");
+            testo.document.write("<div>"+temp_note_export+"</div>");
+            testo.document.write("</body>\n");
+            testo.document.write("</html>");
+            document.getElementById("export_note_helper").innerHTML="Fatto!";
+            setTimeout(function(){
+                document.getElementById("export_note_helper").innerHTML="Esporta";
+            },3500);
         }
     }
 });
@@ -159,10 +182,12 @@ function createHtmlImgCode(n){
 }
 
 function saveCookie(info){
+    // Aggiorna i cookie
     document.cookie = "cookie_trusis_helper = "+ JSON.stringify(info);
 }
 
 function restoreCookie() {
+    // Ripristina i cookie salvati
     var cname = "cookie_trusis_helper";
     var name = cname + "=";
     var ca = document.cookie.split(';');
@@ -205,6 +230,7 @@ function restoreRole( lista_ruoli_cookie ){
 }
 
 function removePlayer(list, nick){
+    // Rimuove le informazioni salvate di uno giocatore dalla lista
     for (var i =0; i< list.length; i++) {
         var list_element = list[i];
         if (list_element[0] == nick.replace(" ", "_")){
@@ -216,6 +242,7 @@ function removePlayer(list, nick){
 }
 
 function addRolePlayer(playerHtmlElement, ruolo){
+    // Aggiunge le informazioni al giocatore
     var htmlImgLink = createHtmlImgCode(ruolo);
     var tempLocationCard = $(playerHtmlElement).parent().children('div.cardfg, div.cardfggy');
     if (typeof tempLocationCard !== "undefined"){
@@ -226,6 +253,7 @@ function addRolePlayer(playerHtmlElement, ruolo){
 }
 
 function html_note_code( player_code ){
+    // Restituisce l'html del pannello per le note
     var htl_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/htl.png";
     var ht_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/ht.png";
     var htr_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/htr.png";
@@ -248,26 +276,26 @@ function html_note_code( player_code ){
     + '<div class="home_helper_element" style="display: none;">'
     + player_code
     + '<div style="display: flex; flex-grow: 1; width: 100%; list-style-type: none;">'
-    +'<button style="margin: 0 auto; border-radius:6px; width:100px; background-color: #112; color: #AEAEAE; border: 0; padding: 4px 7px; text-align:center;" id="save_note_helper">Salva</button></div>'
-    +'</div>'
-    +'</th>'
-    +'<td class="home_r" style="background: url('+hr_link+');"></td>'
-    +'</tr>'
-    +'<tr></tr>'
-    +'<tr>'
-    +'<td class="home_bl" style="background: url('+hbl_link+') no-repeat left top;"></td>'
-    +'<td class="home_b" style="text-align:right; background: url('+hb_link+') repeat-x left top;">'
-    +'</td>'
-    +'<td class="home_br" style="background: url('+hbr_link+') no-repeat right top;"></td>'
-    +'</tr>'
-    +'</tbody>'
-    +'</table>';
+    + '<button style="margin: 0 auto; border-radius:6px; width:100px; background-color: #112; color: #AEAEAE; border: 0; padding: 4px 7px; text-align:center;" id="save_note_helper">Salva</button>'
+    + '<button style="margin: 0 auto; border-radius:6px; width:100px; background-color: #112; color: #AEAEAE; border: 0; padding: 4px 7px; text-align:center;" id="export_note_helper">Esporta</button></div>'
+    + '</div>'
+    + '</th>'
+    + '<td class="home_r" style="background: url('+hr_link+');"></td>'
+    + '</tr>'
+    + '<tr></tr>'
+    + '<tr>'
+    + '<td class="home_bl" style="background: url('+hbl_link+') no-repeat left top;"></td>'
+    + '<td class="home_b" style="text-align:right; background: url('+hb_link+') repeat-x left top;">'
+    + '</td>'
+    + '<td class="home_br" style="background: url('+hbr_link+') no-repeat right top;"></td>'
+    + '</tr>'
+    + '</tbody>'
+    + '</table>';
 
     return html_code;
 }
 
 function trusis_helper_note( l ){
-
     // Lista di tutti gli elementi con la classe 'avatar_name'
     var lista = document.getElementsByClassName('avatar');
     var stringHtml = "";
@@ -282,6 +310,7 @@ function trusis_helper_note( l ){
             first_dead = "found";
         }
         var tempNick = $(tempCard).children('a.nowrap').text();
+        var tempNick_link = $(tempCard).children('a.nowrap').attr('href');
         var note = "";
             for(var j = 0; j < l.length; j++){
                 if( l[j].length >2 && l[j][0] === tempNick.replace(" ", "_")){
@@ -292,7 +321,7 @@ function trusis_helper_note( l ){
 
         stringHtml += '<div style="display: flex; flex-grow: 1; width: 100%; list-style-type: none;">'
             +'<li style="flex-grow: 1; vertical-align:middle; padding-left:10px; padding-top:10px; width: 30px;">'
-            + tempNick
+            + '<a href="'+tempNick_link+'">'+tempNick+'</a>'
             +'</li><li style="flex-grow: 3; vertical-align:middle; padding-left:10px; padding-right: 20px;">'
             +'<textarea class="trusis_helper_note" id="'
             + tempNick.replace(" ", "_")
@@ -338,4 +367,17 @@ function save_note_helper( l ){
         }
     }
     return l;
+}
+
+function export_trusis_helper_note( l ){
+    var result = "";
+    for (var i = 1; i < l.length; i++) {
+        result += "<div><b>"+l[i][0] + "</b>= ";
+        if (l[i][2] !== 'undefined' && l[i][2] != ""){
+            result += l[i][2] + "</div>\n";
+        }else{
+            result += "?</div>\n";
+        }
+    }
+    return result;
 }
