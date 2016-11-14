@@ -14,6 +14,7 @@ Installazione
 
 ChangeLog
 -------
+- v 0.156 Bug fix alle note, fix ruoli
 - v 0.155 Miglioramenti alle note
 - v 0.154 Fix ruolo anteprima giocatore
 - v 0.153 Img fix
