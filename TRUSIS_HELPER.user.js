@@ -2,10 +2,11 @@
 // @id             trusis-helper
 // @name           TRUSIS HELPER: Mentire è solo l'inizio (www.trusis.it)
 // @version        0.155
+// @author         Jacopo1891
 // @namespace
 // @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
 // @downloadURL    https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
-// @description    [Jacopo1891] Helper per Trusis
+// @description    Helper per Trusis
 // @include        https://trusis.altervista.org/*
 // @include        http://trusis.altervista.org/*
 // @match          http://trusis.altervista.org/*
@@ -37,7 +38,7 @@ $(window).on("load", function() {
                     // Setto la card
                     addRolePlayer(tempCard, ruolo);
                     // Aggiorno la lista dei player "etichettati"
-                    var temp_list = [nickname , ruolo];
+                    var temp_list = [tempNick.replace(" ", "_") , ruolo];
                     trusis_helper_list = addToCookieList (trusis_helper_list, temp_list);
                     // Salvo sui Cookie
                     saveCookie(trusis_helper_list);
@@ -97,7 +98,7 @@ function trusis_helper_role() {
 }
 
 function sceltaRuolo(){
-    var ruoliPossibili = "\n1= Umano\n2= Truso\n3= Spazzino\n4= Becchino\n5 = Parroco\n6= Macellaio\n7= Suocera\n8= Oracolo\n9= Pal.Bianco\n10= Kamikaze\n11= Naufrago\n12= Profanatrice\n13= Pal.Nero\n14= Martire\n15= Illusionista";
+    var ruoliPossibili = "\n1= Umano\n2= Truso\n3= Spazzino\n4= Becchino\n5 = Parroco\n6= Macellaio\n7= Suocera\n8= Oracolo\n9= Pal.Bianco\n10= Kamikaze\n11= Naufrago\n12= Profanatrice\n13= Pal.Nero\n14= Martire\n15= Illusionista\n16= Non truso";
     var ruolo = prompt("Che ruolo ha il player?"+ruoliPossibili);
     switch(ruolo) {
         case "1":
@@ -130,6 +131,8 @@ function sceltaRuolo(){
             return 14;
         case "15":
             return 15;
+        case "16":
+            return 16;
         default:
             return 0;
     }
@@ -138,8 +141,10 @@ function sceltaRuolo(){
 function createLink(n){
     // Dato il ruolo restituisce il link all'immagine
     var link;
-    if (n > 0 || n <16){
+    if (n > 0 && n < 16){
         link = "css/images/symbols/card"+n+".png";
+    }else if (n == 16){
+        link = "css/images/symbols/card102.png";
     }else{
         link = "css/images/characters/0.png";
     }
@@ -188,7 +193,7 @@ function restoreRole( lista_ruoli_cookie ){
             var tempCard = $(lista.item(i)).children('div.avatar_name, div#m_.avatar_name.an_vote');
             var tempNick = $(tempCard).children('a.nowrap').text();
             var nickname = tempNick;
-            if (nickname == temp[0]){
+            if (tempNick.replace(" ", "_") == temp[0]){
                 var ruolo = temp[1];
                 // Setto la card
                 if (ruolo != ""){
@@ -202,7 +207,7 @@ function restoreRole( lista_ruoli_cookie ){
 function removePlayer(list, nick){
     for (var i =0; i< list.length; i++) {
         var list_element = list[i];
-        if (list_element[0] == nick){
+        if (list_element[0] == nick.replace(" ", "_")){
             list.splice(i, 1);
             return list;
         }
@@ -279,7 +284,7 @@ function trusis_helper_note( l ){
         var tempNick = $(tempCard).children('a.nowrap').text();
         var note = "";
             for(var j = 0; j < l.length; j++){
-                if( l[j].length >2 &&l[j][0] === tempNick){
+                if( l[j].length >2 && l[j][0] === tempNick.replace(" ", "_")){
                     note = l[j][2];
                     break;
                 }
@@ -290,7 +295,7 @@ function trusis_helper_note( l ){
             + tempNick
             +'</li><li style="flex-grow: 3; vertical-align:middle; padding-left:10px; padding-right: 20px;">'
             +'<textarea class="trusis_helper_note" id="'
-            + tempNick
+            + tempNick.replace(" ", "_")
             + '" style="resize:none; width: 100%; border-radius: 10px; background-color: #346; padding-left: 10px; color: #CDF; margin: 0px 0px -20px 0px;">'
             + note
             + '</textarea></li></div><br>';
@@ -307,20 +312,27 @@ function save_note_helper( l ){
     for (var i = 0; i < lista.length; i++) {
         var tempCard = lista[i].getElementsByClassName('avatar_name');
         var tempNick = $(tempCard).children('a.nowrap').text();
-        var textarea_area_element = "textarea#"+tempNick;
+        var textarea_area_element = "textarea#"+tempNick.replace(" ", "_");
         var temp_note = $(textarea_area_element).val();
         if ( typeof temp_note !== 'undefined'){
             var check = true;
             for(var j = 0; j < l.length; j++){
-                if(l[j][0] === tempNick){
-                    l[j].push(temp_note);
+                if(l[j][0] === tempNick.replace(" ", "_")){
+                    if ( l.length <= 2 ){
+                        console.log("Meno di 2");
+                        l[j].splice(2, 0, temp_note);
+                    }
+                    else{
+                        console.log("Più di 2");
+                        l[j][2] = temp_note;
+                    }
                     check = false;
                     break;
                 }
             }
             if (check){
                 // Controllo che non sia una nuova informazione
-                new_value_with_note = [tempNick, "", temp_note];
+                new_value_with_note = [tempNick.replace(" ", "_"), "", temp_note];
                 l.push(new_value_with_note);
             }
         }
