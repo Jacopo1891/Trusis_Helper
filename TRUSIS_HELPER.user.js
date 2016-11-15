@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             trusis-helper
 // @name           TRUSIS HELPER: Mentire è solo l'inizio (www.trusis.it)
-// @version        0.16
+// @version        0.161
 // @author         Jacopo1891
 // @namespace
 // @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
@@ -203,10 +203,18 @@ function restoreCookie() {
     return "";
 }
 
-function addToCookieList (list , element){
-    list = removePlayer(list , element[0]);
-    list.push(element);
-    return list;
+function addToCookieList (list_cookie , element){
+    for (var i =0; i< list_cookie.length; i++) {
+        var cookie_element = list_cookie[i];
+        console.log("Test: " + cookie_element[0] +" "+ element[0]);
+        if (cookie_element[0] == element[0].replace(" ", "_")){
+            cookie_element[1] = element[1];
+            console.log(list_cookie);
+            return list_cookie;
+        }
+    }
+    list_cookie.push(element);
+    return list_cookie;
 }
 
 function restoreRole( lista_ruoli_cookie ){
@@ -234,7 +242,7 @@ function removePlayer(list, nick){
     for (var i =0; i< list.length; i++) {
         var list_element = list[i];
         if (list_element[0] == nick.replace(" ", "_")){
-            list.splice(i, 1);
+            list_element[1] = "";
             return list;
         }
     }
@@ -374,9 +382,9 @@ function export_trusis_helper_note( l ){
     for (var i = 1; i < l.length; i++) {
         result += "<div><b>"+l[i][0] + "</b>= ";
         if (l[i][2] !== 'undefined' && l[i][2] != ""){
-            result += l[i][2] + "</div>\n";
+            result += l[i][2] + ";</div>\n";
         }else{
-            result += "?</div>\n";
+            result += "?;</div>\n";
         }
     }
     return result;

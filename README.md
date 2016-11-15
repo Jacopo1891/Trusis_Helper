@@ -14,6 +14,7 @@ Installazione
 
 ChangeLog
 -------
+- v 0.161 Bug fix note e ruoli
 - v 0.16  Miglioramenti note: nick cliccabile e note esportabili
 - v 0.156 Bug fix alle note, fix ruoli
 - v 0.155 Miglioramenti alle note
