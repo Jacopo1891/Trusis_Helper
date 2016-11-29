@@ -2,7 +2,10 @@
 [Jacopo1891] Helper per Trusis
 
 Permette di aggiungere sull'immagine del giocatore il possibile ruolo:
-<p align="center"><img src="https://s16.postimg.org/k1pd7l8md/Schermata_del_2016_10_25_19_21_01.png"><p>
+<p align="center"><img src="https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/demo/Trusis_Helper_Demo1.png"><p>
+
+Possibilità di gestire note aggiuntive esportabili:
+<p align="center"><img src="https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/demo/Trusis_Helper_Demo2.png"><p>
 
 Installazione
 -------
