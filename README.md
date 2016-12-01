@@ -1,5 +1,8 @@
-# Trusis_Helper
-[Jacopo1891] Helper per Trusis
+## Trusis_Helper
+<a href="https://codeclimate.com/github/Jacopo1891/Trusis_Helper"><img src="https://codeclimate.com/github/Jacopo1891/Trusis_Helper/badges/gpa.svg" /></a>
+<a href="https://codeclimate.com/github/Jacopo1891/Trusis_Helper"><img src="https://codeclimate.com/github/Jacopo1891/Trusis_Helper/badges/issue_count.svg" /></a>
+
+#Helper per Trusis
 
 Permette di aggiungere sull'immagine del giocatore il possibile ruolo:
 <p align="center"><img src="https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/demo/Trusis_Helper_Demo1.png"><p>
