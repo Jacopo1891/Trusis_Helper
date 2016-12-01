@@ -1,6 +1,8 @@
 ## Trusis_Helper
 <a href="https://codeclimate.com/github/Jacopo1891/Trusis_Helper"><img src="https://codeclimate.com/github/Jacopo1891/Trusis_Helper/badges/gpa.svg" /></a>
 <a href="https://codeclimate.com/github/Jacopo1891/Trusis_Helper"><img src="https://codeclimate.com/github/Jacopo1891/Trusis_Helper/badges/issue_count.svg" /></a>
+<a href="https://codeclimate.com/github/Jacopo1891/Trusis_Helper"><img src="https://img.shields.io/badge/release-0.161-blue.svg" /></a>
+
 
 #Helper per Trusis
 
