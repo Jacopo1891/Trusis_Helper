@@ -1,8 +1,16 @@
-# Trusis_Helper
-[Jacopo1891] Helper per Trusis
+## Trusis_Helper
+<a href="https://codeclimate.com/github/Jacopo1891/Trusis_Helper"><img src="https://codeclimate.com/github/Jacopo1891/Trusis_Helper/badges/gpa.svg" /></a>
+<a href="https://codeclimate.com/github/Jacopo1891/Trusis_Helper"><img src="https://codeclimate.com/github/Jacopo1891/Trusis_Helper/badges/issue_count.svg" /></a>
+<a href="https://codeclimate.com/github/Jacopo1891/Trusis_Helper"><img src="https://img.shields.io/badge/release-0.161-blue.svg" /></a>
+
+
+#Helper per Trusis
 
 Permette di aggiungere sull'immagine del giocatore il possibile ruolo:
-<p align="center"><img src="https://s16.postimg.org/k1pd7l8md/Schermata_del_2016_10_25_19_21_01.png"><p>
+<p align="center"><img src="https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/demo/Trusis_Helper_Demo1.png"><p>
+
+Possibilità di gestire note aggiuntive esportabili:
+<p align="center"><img src="https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/demo/Trusis_Helper_Demo2.png"><p>
 
 Installazione
 -------
@@ -11,6 +19,11 @@ Installazione
 - Installare su Tampermonkey Trusis_Helper ( <a class="minibutton" href="https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js">Clicca qui</a> )
 
 ** Se al momento della ricerca di una partita non si visualizza l'elenco disabilitare temporaneamente il plugin da Tampermonkey.
+
+Come funziona
+-------
+<p align="center"><img src="https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/demo/Trusis_Helper_Demo0.gif"><p>
+
 
 ChangeLog
 -------
