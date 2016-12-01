@@ -1,12 +1,12 @@
 // ==UserScript==
 // @id             trusis-helper
 // @name           TRUSIS HELPER: Helper per il gioco online Trusis (trusis.it)
-// @version        0.162
+// @version        0.163
 // @author         Jacopo1891
 // @namespace
 // @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
 // @downloadURL    https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
-// @description    v 0.162 NUOVA FUNZIONE: Chat con colori personalizzati
+// @description    v 0.163 Bug fix chat con colori personalizzati
 // @include        https://trusis.altervista.org/*
 // @include        http://trusis.altervista.org/*
 // @match          http://trusis.altervista.org/*
@@ -67,6 +67,7 @@ $(window).on("load", function() {
             saveCookie(trusis_helper_list);
         }
         if (e.id == "export_note_helper"){
+            trusis_helper_list = save_note_helper( trusis_helper_list );
             var temp_note_export = export_trusis_helper_note( trusis_helper_list );
             var w = 400;
             var h = 250;
@@ -90,7 +91,7 @@ $(window).on("load", function() {
             },3500);
         }
     }
-
+    trusis_helper_list = save_note_helper( trusis_helper_list );
     $('#view_ajax').bind("DOMSubtreeModified",function(){
         set_color_chat_all(trusis_helper_list);
     });

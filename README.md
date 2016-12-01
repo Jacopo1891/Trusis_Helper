@@ -26,6 +26,7 @@ Come funziona
 
 ChangeLog
 -------
+- v 0.163 Bug fix chat con colori personalizzati
 - v 0.162 NUOVA FUNZIONE: Chat con colori personalizzati
 - v 0.161 Bug fix note e ruoli
 - v 0.16  Miglioramenti note: nick cliccabile e note esportabili
