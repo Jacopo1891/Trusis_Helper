@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             trusis-helper
 // @name           TRUSIS HELPER: Mentire è solo l'inizio (www.trusis.it)
-// @version        0.161
+// @version        0.161wip
 // @author         Jacopo1891
 // @namespace
 // @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
@@ -13,6 +13,10 @@
 // @match          https://trusis.altervista.org/*
 // @grant          none
 // ==/UserScript==
+var spectrum_js = "http://bgrins.github.io/spectrum/spectrum.js";
+var spectrum_css = "http://bgrins.github.io/spectrum/spectrum.css";
+$('head').append('<script type="text/javascript" src="' + spectrum_js + '"></script>');
+$('head').append('<link rel="stylesheet" type="text/css" href="' + spectrum_css + '">');
 
 $(window).on("load", function() {
     var trusis_helper_list = trusis_helper_role();
@@ -86,6 +90,38 @@ $(window).on("load", function() {
             },3500);
         }
     }
+
+    $('#view_ajax').bind("DOMSubtreeModified",function(){
+        set_color_chat_all(trusis_helper_list);
+    });
+    var lista = document.getElementsByClassName('avatar');
+    for (var i = 0; i < lista.length; i++) {
+        var tempCard = lista[i].getElementsByClassName('avatar_name');
+        var tempNick = $(tempCard).children('a.nowrap').text();
+        var colore = get_color_chat(trusis_helper_list, tempNick);
+        $('#color_'+tempNick.replace(" ", "_")).spectrum({
+            color: colore,
+            showPaletteOnly: true,
+            togglePaletteOnly: true,
+            palette: [
+                ["#000","#444","#666","#999","#ccc","#eee","#f3f3f3","#fff"],
+                ["#f00","#f90","#ff0","#0f0","#0ff","#00f","#90f","#f0f"],
+                ["#f4cccc","#fce5cd","#fff2cc","#d9ead3","#d0e0e3","#cfe2f3","#d9d2e9","#ead1dc"],
+                ["#ea9999","#f9cb9c","#ffe599","#b6d7a8","#a2c4c9","#9fc5e8","#b4a7d6","#d5a6bd"],
+                ["#e06666","#f6b26b","#ffd966","#93c47d","#76a5af","#6fa8dc","#8e7cc3","#c27ba0"],
+                ["#c00","#e69138","#f1c232","#6aa84f","#45818e","#3d85c6","#674ea7","#a64d79"],
+                ["#900","#b45f06","#bf9000","#38761d","#134f5c","#0b5394","#351c75","#741b47"],
+                ["#600","#783f04","#7f6000","#274e13","#0c343d","#073763","#20124d","#4c1130"]
+            ],
+            change: function(color) {
+                var id = $(this).attr('id');
+                trusis_helper_list = addColorToCookieList(trusis_helper_list, id, color.toHexString());
+                saveCookie( trusis_helper_list );
+                set_color_chat (id, color.toHexString());
+            }
+        });
+    }
+    set_color_chat_all(trusis_helper_list);
 });
 function trusis_helper_role() {
     var url = document.URL.split("/");
@@ -196,7 +232,7 @@ function restoreCookie() {
         while (c.charAt(0)==' ') {
             c = c.substring(1);
         }
-        if (c.indexOf(name) == 0) {
+        if (c.indexOf(name) === 0) {
             return c.substring(name.length,c.length);
         }
     }
@@ -204,12 +240,11 @@ function restoreCookie() {
 }
 
 function addToCookieList (list_cookie , element){
+    // Aggiunge informazioni alla lista
     for (var i =0; i< list_cookie.length; i++) {
         var cookie_element = list_cookie[i];
-        console.log("Test: " + cookie_element[0] +" "+ element[0]);
         if (cookie_element[0] == element[0].replace(" ", "_")){
             cookie_element[1] = element[1];
-            console.log(list_cookie);
             return list_cookie;
         }
     }
@@ -229,7 +264,7 @@ function restoreRole( lista_ruoli_cookie ){
             if (tempNick.replace(" ", "_") == temp[0]){
                 var ruolo = temp[1];
                 // Setto la card
-                if (ruolo != ""){
+                if (ruolo !== ""){
                     addRolePlayer(tempCard, ruolo);
                 }
             }
@@ -239,7 +274,7 @@ function restoreRole( lista_ruoli_cookie ){
 
 function removePlayer(list, nick){
     // Rimuove le informazioni salvate di uno giocatore dalla lista
-    for (var i =0; i< list.length; i++) {
+    for (var i = 0; i< list.length; i++) {
         var list_element = list[i];
         if (list_element[0] == nick.replace(" ", "_")){
             list_element[1] = "";
@@ -311,7 +346,7 @@ function trusis_helper_note( l ){
     for (var i = 0; i < lista.length; i++) {
         var tempCard = lista[i].getElementsByClassName('avatar_name');
         var cimitero = $(tempCard).parent().hasClass( "avatar_dead" );
-        if (cimitero === true && first_dead == ""){
+        if (cimitero === true && first_dead === ""){
             stringHtml += '<div style="display: flex; flex-grow:1; width:100%; list-style-type:none;">'
                 +'<li style="text-align: center; margin-left: 40%; ">! ---- Cimitero ---- !</li>'
                 +'</div>';
@@ -327,11 +362,14 @@ function trusis_helper_note( l ){
                 }
             }
 
-        stringHtml += '<div style="display: flex; flex-grow: 1; width: 100%; list-style-type: none;">'
-            +'<li style="flex-grow: 1; vertical-align:middle; padding-left:10px; padding-top:10px; width: 30px;">'
+        stringHtml += '<div style="display: flex; flex-grow: 1; width: 100%; list-style-type: none; id=color_"'
+            + tempNick.replace(" ", "_")
+            + '">'
+            + '<input type="text" id="color_'+ tempNick.replace(" ", "_") +'" />'
+            + '<li style="flex-grow: 1; vertical-align:middle; padding-left:10px; padding-top:5px; width: 30px;">'
             + '<a href="'+tempNick_link+'">'+tempNick+'</a>'
-            +'</li><li style="flex-grow: 3; vertical-align:middle; padding-left:10px; padding-right: 20px;">'
-            +'<textarea class="trusis_helper_note" id="'
+            + '</li><li style="flex-grow: 3; vertical-align:middle; padding-left:10px; padding-right: 20px; margin-top:-2px; ">'
+            + '<textarea class="trusis_helper_note" id="'
             + tempNick.replace(" ", "_")
             + '" style="resize:none; width: 100%; border-radius: 10px; background-color: #346; padding-left: 10px; color: #CDF; margin: 0px 0px -20px 0px;">'
             + note
@@ -356,11 +394,9 @@ function save_note_helper( l ){
             for(var j = 0; j < l.length; j++){
                 if(l[j][0] === tempNick.replace(" ", "_")){
                     if ( l.length <= 2 ){
-                        console.log("Meno di 2");
                         l[j].splice(2, 0, temp_note);
                     }
                     else{
-                        console.log("Più di 2");
                         l[j][2] = temp_note;
                     }
                     check = false;
@@ -381,11 +417,69 @@ function export_trusis_helper_note( l ){
     var result = "";
     for (var i = 1; i < l.length; i++) {
         result += "<div><b>"+l[i][0] + "</b>= ";
-        if (l[i][2] !== 'undefined' && l[i][2] != ""){
+        if (l[i][2] !== 'undefined' && l[i][2] !== ""){
             result += l[i][2] + ";</div>\n";
         }else{
             result += "?;</div>\n";
         }
     }
     return result;
+}
+
+function set_color_chat (id, colore){
+    var player = id.replace("color_", "");
+    var nick = player.replace("_", " ");
+    var lista = document.getElementsByClassName('chat_message');
+    for (var i=0; i<lista.length; i++){
+        var tempNick = $(lista[i]).children('a').text();
+        if (tempNick == nick){
+            $(lista[i]).css('color', colore);
+        }
+    }
+}
+
+function get_color_chat (list_cookie, nickname){
+    var nick = nickname.replace(" ", "_");
+    for (var i=0; i<list_cookie.length; i++){
+        var element_list = list_cookie[i];
+        if (nick === element_list[0]){
+            if( typeof element_list[3] !== 'undefined' ){
+                // Restituisce il colore impostato
+                return element_list[3];
+            }else{
+                // Colore di default
+                return "AAC";
+            }
+        }
+    }
+    // In caso non trovi il nick -> Colore di default
+    return "#AAC";
+}
+
+function addColorToCookieList (list_cookie, id, colore){
+    // Aggiunge informazioni alla lista
+    var nick = id.replace("color_", "");
+    for (var i =0; i< list_cookie.length; i++) {
+        var cookie_element = list_cookie[i];
+        if (cookie_element[0] === nick){
+            if (cookie_element.length == 4){
+                cookie_element[3] = colore;
+                return list_cookie;
+            }else{
+                cookie_element.push(colore);
+                return list_cookie;
+            }
+        }
+    }
+}
+
+function set_color_chat_all(list_cookie){
+    for (var i =0; i< list_cookie.length; i++) {
+        var element_list = list_cookie[i];
+        var nick = element_list[0];
+        if( typeof element_list[3] !== 'undefined' ){
+            var id = "color_"+nick;
+            set_color_chat (id, element_list[3]);
+        }
+    }
 }
