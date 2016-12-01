@@ -15,6 +15,11 @@ Installazione
 
 ** Se al momento della ricerca di una partita non si visualizza l'elenco disabilitare temporaneamente il plugin da Tampermonkey.
 
+Come funziona
+-------
+<p align="center"><img src="https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/demo/Trusis_Helper_Demo0.gif"><p>
+
+
 ChangeLog
 -------
 - v 0.161 Bug fix note e ruoli
