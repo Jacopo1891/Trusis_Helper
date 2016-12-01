@@ -1,12 +1,12 @@
 // ==UserScript==
 // @id             trusis-helper
-// @name           TRUSIS HELPER: Mentire è solo l'inizio (www.trusis.it)
-// @version        0.161wip
+// @name           TRUSIS HELPER: Helper per il gioco online Trusis (trusis.it)
+// @version        0.162
 // @author         Jacopo1891
 // @namespace
 // @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
 // @downloadURL    https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
-// @description    Helper per Trusis
+// @description    v 0.162 NUOVA FUNZIONE: Chat con colori personalizzati
 // @include        https://trusis.altervista.org/*
 // @include        http://trusis.altervista.org/*
 // @match          http://trusis.altervista.org/*
