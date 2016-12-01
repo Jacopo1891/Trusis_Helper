@@ -90,12 +90,17 @@ $(window).on("load", function() {
             },3500);
         }
     }
+
+    $('#view_ajax').bind("DOMSubtreeModified",function(){
+        set_color_chat_all(trusis_helper_list);
+    });
     var lista = document.getElementsByClassName('avatar');
     for (var i = 0; i < lista.length; i++) {
         var tempCard = lista[i].getElementsByClassName('avatar_name');
         var tempNick = $(tempCard).children('a.nowrap').text();
+        var colore = get_color_chat(trusis_helper_list, tempNick);
         $('#color_'+tempNick.replace(" ", "_")).spectrum({
-            color: "#AAC",
+            color: colore,
             showPaletteOnly: true,
             togglePaletteOnly: true,
             palette: [
@@ -110,10 +115,13 @@ $(window).on("load", function() {
             ],
             change: function(color) {
                 var id = $(this).attr('id');
+                trusis_helper_list = addColorToCookieList(trusis_helper_list, id, color.toHexString());
+                saveCookie( trusis_helper_list );
                 set_color_chat (id, color.toHexString());
             }
         });
     }
+    set_color_chat_all(trusis_helper_list);
 });
 function trusis_helper_role() {
     var url = document.URL.split("/");
@@ -224,7 +232,7 @@ function restoreCookie() {
         while (c.charAt(0)==' ') {
             c = c.substring(1);
         }
-        if (c.indexOf(name) == 0) {
+        if (c.indexOf(name) === 0) {
             return c.substring(name.length,c.length);
         }
     }
@@ -232,12 +240,11 @@ function restoreCookie() {
 }
 
 function addToCookieList (list_cookie , element){
+    // Aggiunge informazioni alla lista
     for (var i =0; i< list_cookie.length; i++) {
         var cookie_element = list_cookie[i];
-        console.log("Test: " + cookie_element[0] +" "+ element[0]);
         if (cookie_element[0] == element[0].replace(" ", "_")){
             cookie_element[1] = element[1];
-            console.log(list_cookie);
             return list_cookie;
         }
     }
@@ -257,7 +264,7 @@ function restoreRole( lista_ruoli_cookie ){
             if (tempNick.replace(" ", "_") == temp[0]){
                 var ruolo = temp[1];
                 // Setto la card
-                if (ruolo != ""){
+                if (ruolo !== ""){
                     addRolePlayer(tempCard, ruolo);
                 }
             }
@@ -267,7 +274,7 @@ function restoreRole( lista_ruoli_cookie ){
 
 function removePlayer(list, nick){
     // Rimuove le informazioni salvate di uno giocatore dalla lista
-    for (var i =0; i< list.length; i++) {
+    for (var i = 0; i< list.length; i++) {
         var list_element = list[i];
         if (list_element[0] == nick.replace(" ", "_")){
             list_element[1] = "";
@@ -339,7 +346,7 @@ function trusis_helper_note( l ){
     for (var i = 0; i < lista.length; i++) {
         var tempCard = lista[i].getElementsByClassName('avatar_name');
         var cimitero = $(tempCard).parent().hasClass( "avatar_dead" );
-        if (cimitero === true && first_dead == ""){
+        if (cimitero === true && first_dead === ""){
             stringHtml += '<div style="display: flex; flex-grow:1; width:100%; list-style-type:none;">'
                 +'<li style="text-align: center; margin-left: 40%; ">! ---- Cimitero ---- !</li>'
                 +'</div>';
@@ -390,7 +397,6 @@ function save_note_helper( l ){
                         l[j].splice(2, 0, temp_note);
                     }
                     else{
-                        console.log("Più di 2");
                         l[j][2] = temp_note;
                     }
                     check = false;
@@ -411,7 +417,7 @@ function export_trusis_helper_note( l ){
     var result = "";
     for (var i = 1; i < l.length; i++) {
         result += "<div><b>"+l[i][0] + "</b>= ";
-        if (l[i][2] !== 'undefined' && l[i][2] != ""){
+        if (l[i][2] !== 'undefined' && l[i][2] !== ""){
             result += l[i][2] + ";</div>\n";
         }else{
             result += "?;</div>\n";
@@ -421,15 +427,59 @@ function export_trusis_helper_note( l ){
 }
 
 function set_color_chat (id, colore){
-
     var player = id.replace("color_", "");
     var nick = player.replace("_", " ");
     var lista = document.getElementsByClassName('chat_message');
     for (var i=0; i<lista.length; i++){
         var tempNick = $(lista[i]).children('a').text();
         if (tempNick == nick){
-            console.log(colore);
             $(lista[i]).css('color', colore);
+        }
+    }
+}
+
+function get_color_chat (list_cookie, nickname){
+    var nick = nickname.replace(" ", "_");
+    for (var i=0; i<list_cookie.length; i++){
+        var element_list = list_cookie[i];
+        if (nick === element_list[0]){
+            if( typeof element_list[3] !== 'undefined' ){
+                // Restituisce il colore impostato
+                return element_list[3];
+            }else{
+                // Colore di default
+                return "AAC";
+            }
+        }
+    }
+    // In caso non trovi il nick -> Colore di default
+    return "#AAC";
+}
+
+function addColorToCookieList (list_cookie, id, colore){
+    // Aggiunge informazioni alla lista
+    var nick = id.replace("color_", "");
+    for (var i =0; i< list_cookie.length; i++) {
+        var cookie_element = list_cookie[i];
+        if (cookie_element[0] === nick){
+            if (cookie_element.length == 4){
+                cookie_element[3] = colore;
+                return list_cookie;
+            }else{
+                cookie_element.push(colore);
+                return list_cookie;
+            }
+        }
+    }
+}
+
+function set_color_chat_all(list_cookie){
+    for (var i =0; i< list_cookie.length; i++) {
+        var element_list = list_cookie[i];
+        var nick = element_list[0];
+        if( typeof element_list[3] !== 'undefined' ){
+            var id = "color_"+nick;
+            set_color_chat (id, element_list[3]);
         }
     }
 }
