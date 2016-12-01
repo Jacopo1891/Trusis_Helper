@@ -1,7 +1,6 @@
 ## Trusis_Helper
 <a href="https://codeclimate.com/github/Jacopo1891/Trusis_Helper"><img src="https://codeclimate.com/github/Jacopo1891/Trusis_Helper/badges/gpa.svg" /></a>
 <a href="https://codeclimate.com/github/Jacopo1891/Trusis_Helper"><img src="https://codeclimate.com/github/Jacopo1891/Trusis_Helper/badges/issue_count.svg" /></a>
-<a href="https://codeclimate.com/github/Jacopo1891/Trusis_Helper"><img src="https://img.shields.io/badge/release-0.161-blue.svg" /></a>
 
 
 #Helper per Trusis
@@ -15,7 +14,7 @@ Possibilità di gestire note aggiuntive esportabili:
 Installazione
 -------
 
-- Installare Tampermonkey sul broswer. ( <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=it">Chrome</a> , <a href="https://addons.mozilla.org/it/firefox/addon/tampermonkey/">Firefox</a> )
+- Installare Tampermonkey sul broswer. ( <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=it">Chrome</a> , <a href="https://addons.mozilla.org/it/firefox/addon/tampermonkey/">Firefox</a> , <a href="https://safari.tampermonkey.net/tampermonkey.safariextz">Safari</a> )
 - Installare su Tampermonkey Trusis_Helper ( <a class="minibutton" href="https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js">Clicca qui</a> )
 
 ** Se al momento della ricerca di una partita non si visualizza l'elenco disabilitare temporaneamente il plugin da Tampermonkey.
@@ -27,6 +26,7 @@ Come funziona
 
 ChangeLog
 -------
+- v 0.162 NUOVA FUNZIONE: Chat con colori personalizzati
 - v 0.161 Bug fix note e ruoli
 - v 0.16  Miglioramenti note: nick cliccabile e note esportabili
 - v 0.156 Bug fix alle note, fix ruoli
