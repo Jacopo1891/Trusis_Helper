@@ -11,6 +11,9 @@ Permette di aggiungere sull'immagine del giocatore il possibile ruolo:
 Possibilità di gestire note aggiuntive esportabili:
 <p align="center"><img src="https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/demo/Trusis_Helper_Demo2.png"><p>
 
+Assegnare ad ogni giocatore un colore personalizzato per la chat della partita:
+<p align="center"><img src="https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/demo/Trusis_Helper_Demo3.png"><p>
+
 Installazione
 -------
 
