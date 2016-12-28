@@ -1,26 +1,47 @@
 // ==UserScript==
 // @id             trusis-helper
 // @name           TRUSIS HELPER: Helper per il gioco online Trusis (trusis.it)
-// @version        0.163
+// @version        0.164
 // @author         Jacopo1891
 // @namespace
 // @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
 // @downloadURL    https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
-// @description    v 0.163 Bug fix chat con colori personalizzati
+// @description    Helper per Trusis, con note aggiuntive e segnaruoli online
 // @include        https://trusis.altervista.org/*
 // @include        http://trusis.altervista.org/*
 // @match          http://trusis.altervista.org/*
 // @match          https://trusis.altervista.org/*
 // @grant          none
 // ==/UserScript==
-var spectrum_js = "http://bgrins.github.io/spectrum/spectrum.js";
-var spectrum_css = "http://bgrins.github.io/spectrum/spectrum.css";
+var spectrum_js = "https://rawgit.com/Jacopo1891/Trusis_Helper/master/js/spectrum.js";
+var spectrum_css = "https://rawgit.com/Jacopo1891/Trusis_Helper/master/css/spectrum.css";
+var jquery_ui_js = "https://rawgit.com/Jacopo1891/Trusis_Helper/master/js/jquery-ui.js";
+var jquery_ui_css = "https://rawgit.com/Jacopo1891/Trusis_Helper/master/css/jquery-ui.css";
+var lz_string_js = "https://rawgit.com/pieroxy/lz-string/master/libs/lz-string.js";
+
+var url_update = "https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js";
+var trusis_helper_css = "https://rawgit.com/Jacopo1891/Trusis_Helper/master/css/trusis_helper.css";
+
+
 $('head').append('<script type="text/javascript" src="' + spectrum_js + '"></script>');
 $('head').append('<link rel="stylesheet" type="text/css" href="' + spectrum_css + '">');
+$('head').append('<script type="text/javascript" src="' + jquery_ui_js + '"></script>');
+$('head').append('<link rel="stylesheet" type="text/css" href="' + jquery_ui_css + '">');
+$('head').append('<link rel="stylesheet" type="text/css" href="' + trusis_helper_css + '">');
+
+$('head').append('<script type="text/javascript" src="' + lz_string_js + '"></script>');
 
 $(window).on("load", function() {
     var trusis_helper_list = trusis_helper_role();
-    trusis_helper_note( trusis_helper_list );
+/*
+    console.log(trusis_helper_list.toString());
+    var encode = btoa(trusis_helper_list);
+    console.log(encode);
+    var LZString_compress = LZString.compress( encode );
+    console.log(LZString_compress);
+*/
+    html_note_code( trusis_helper_list );
+    trusis_helper_navbar();
     document.body.onclick = function(e) {   //Document body clicked
         if (window.event) {
             e = event.srcElement;           //e = elemento cliccato
@@ -48,16 +69,18 @@ $(window).on("load", function() {
                     saveCookie(trusis_helper_list);
                 }
             }
-        }if (e.id == 'trusis_helper_img') {
+        }
+        else if (e.id == 'trusis_helper_img') {
             var nickRemove = $(e).parent().parent().text();
             trusis_helper_list = removePlayer(trusis_helper_list, nickRemove);
             // Salvo sui Cookie
             saveCookie(trusis_helper_list);
             $(e).remove();
-        }if (e.id == "helper_note"){
+        }
+        else if (e.id == "helper_note"){
             $(".home_helper_element").toggle();
         }
-        if (e.id == "save_note_helper"){
+        else if (e.id == "save_note_helper"){
             trusis_helper_list = save_note_helper( trusis_helper_list );
             document.getElementById("save_note_helper").innerHTML="Salvato!";
             setTimeout(function(){
@@ -66,7 +89,7 @@ $(window).on("load", function() {
             // Salvo sui Cookie
             saveCookie(trusis_helper_list);
         }
-        if (e.id == "export_note_helper"){
+        else if (e.id == "export_note_helper"){
             trusis_helper_list = save_note_helper( trusis_helper_list );
             var temp_note_export = export_trusis_helper_note( trusis_helper_list );
             var w = 400;
@@ -90,16 +113,73 @@ $(window).on("load", function() {
                 document.getElementById("export_note_helper").innerHTML="Esporta";
             },3500);
         }
+        else if (e.id == "tab_d"){
+            $('#tab_b').removeClass('tabberactive');
+            $('#tab2').addClass('tabbertabhide');
+            $('#tab_n').removeClass('tabberactive');
+            $('#tab3').addClass('tabbertabhide');
+
+            $('#tab_d').addClass('tabberactive');
+            $('#tab1').removeClass('tabbertabhide');
+        }
+        else if (e.id == "tab_b"){
+            $('#tab_d').removeClass('tabberactive');
+            $('#tab1').addClass('tabbertabhide');
+            $('#tab_n').removeClass('tabberactive');
+            $('#tab3').addClass('tabbertabhide');
+
+            $('#tab_b').addClass('tabberactive');
+            $('#tab2').removeClass('tabbertabhide');
+        }
+        else if (e.id == "tab_n"){
+            $('#tab_d').removeClass('tabberactive');
+            $('#tab1').addClass('tabbertabhide');
+            $('#tab_b').removeClass('tabberactive');
+            $('#tab2').addClass('tabbertabhide');
+
+            $('#tab_n').addClass('tabberactive');
+            $('#tab3').removeClass('tabbertabhide');
+        }
+        else if (e.id == "info_trusis_helper"){
+            var w = 315;
+            var h = 300;
+            var l = Math.floor((screen.width-w)/2);
+            var t = Math.floor((screen.height-h)/2);
+            var stili = "top=10, left=10, width="+w+", height="+h+",top=" + t + ",left=" + l +" status=no, menubar=no, toolbar=no scrollbars=no resizable=no";
+            var testo = window.open("", "", stili);
+
+            testo.document.write("<html>");
+            testo.document.write("<head>");
+            testo.document.write("<title>Trusis Helper - Info</title>");
+            testo.document.write("<link rel='stylesheet' type='text/css' href='"+ trusis_helper_css +"'>");
+            testo.document.write("</head>");
+            testo.document.write("<body class='t_helper'>");
+            testo.document.write("<div class='th_title_info'><b>Trusis Helper:</b></div>\n");
+            testo.document.write("<div class='th_info'>@Autore: Jacopo1891 ~ <a href='/member/5297' target='_blank'>RobinHood</a></div>");
+            testo.document.write("<div class='th_info'>@Versione: 0.164 ~ <a href='"+ url_update +"' target='_blank'>Ultima versione</a> </div>");
+            testo.document.write("<div class='th_info'>@News: <a href='/tag/TrusisHelper' target='_blank'>#TrusisHelper</a></div>");
+            testo.document.write("<div class='th_info'>Per consigli o suggerimenti contattatemi su Trusis con il mio alias o chiedete di me nel gruppo fb!</div>");
+            testo.document.write("<div class='th_info'>\n\n</div>");
+            testo.document.write("<div class='th_info'>* A causa del plug-in il gioco potrebbe risultare leggermente rallentato: è normale, dipende dalle funzioni aggiunte! *</div>");
+            testo.document.write("</body>\n");
+            testo.document.write("</html>");
+        }
     }
     trusis_helper_list = save_note_helper( trusis_helper_list );
     $('#view_ajax').bind("DOMSubtreeModified",function(){
         set_color_chat_all(trusis_helper_list);
+        //link_to_player_tag();
     });
     var lista = document.getElementsByClassName('avatar');
+    var availableTags = [];
     for (var i = 0; i < lista.length; i++) {
         var tempCard = lista[i].getElementsByClassName('avatar_name');
         var tempNick = $(tempCard).children('a.nowrap').text();
+        availableTags.push("@"+tempNick.replace(" ", "_"));
         var colore = get_color_chat(trusis_helper_list, tempNick);
+        /*if (colore === ""){
+            colore = "#AAC";
+        }*/
         $('#color_'+tempNick.replace(" ", "_")).spectrum({
             color: colore,
             showPaletteOnly: true,
@@ -123,6 +203,64 @@ $(window).on("load", function() {
         });
     }
     set_color_chat_all(trusis_helper_list);
+    //link_to_player_tag();
+
+    function split(val) {
+        return val.split(/@\s*/);
+    }
+
+    function extractLast(term) {
+        return split(term).pop();
+    }
+
+    $('#chat').bind('autocompleteopen', function(event, ui) {
+        $(this).data('is_open',true);
+    });
+
+    $('#chat').bind('autocompleteclose', function(event, ui) {
+        $(this).data('is_open',false);
+    });
+
+    $("#chat").bind("keydown", function(event) {
+        // don't navigate away from the field on tab when selecting an item
+        if ( $(this).data('is_open') && event.keyCode === $.ui.keyCode.TAB ){
+            event.preventDefault();
+        }
+    }).autocomplete({
+        source: function(request, response) {
+            var term = request.term,
+                results = [];
+            if (term.indexOf("@") >= 0) {
+                term = extractLast(request.term);
+                if (term.length > 0) {
+                    results = $.ui.autocomplete.filter(
+                        availableTags, term);
+                }
+            }
+            response(results);
+        },
+        focus: function() {
+            // prevent value inserted on focus
+            return false;
+        },
+        select: function(event, ui) {
+            var terms = split(this.value);
+            // remove the current input
+            terms.pop();
+            for(var i = 0; i < terms.length; i++ ){
+                if(i > 0){
+                    terms[i] = "@"+terms[i];
+                }
+            }
+            // add the selected item
+            terms.push(ui.item.value);
+            // add placeholder to get the comma-and-space at the end
+            terms.push("");
+            this.value = terms.join("");
+            return false;
+        }
+    });
+
 });
 function trusis_helper_role() {
     var url = document.URL.split("/");
@@ -158,7 +296,23 @@ function trusis_helper_role() {
 }
 
 function sceltaRuolo(){
-    var ruoliPossibili = "\n1= Umano\n2= Truso\n3= Spazzino\n4= Becchino\n5 = Parroco\n6= Macellaio\n7= Suocera\n8= Oracolo\n9= Pal.Bianco\n10= Kamikaze\n11= Naufrago\n12= Profanatrice\n13= Pal.Nero\n14= Martire\n15= Illusionista\n16= Non truso";
+    var ruoliPossibili =
+        "\n1= Umano"+
+        "\n2= Truso"+
+        "\n3= Spazzino"+
+        "\n4= Becchino"+
+        "\n5 = Parroco"+
+        "\n6= Macellaio"+
+        "\n7= Suocera"+
+        "\n8= Oracolo"+
+        "\n9= Pal.Bianco"+
+        "\n10= Kamikaze"+
+        "\n11= Naufrago"+
+        "\n12= Profanatrice"+
+        "\n13= Pal.Nero"+
+        "\n14= Martire"+
+        "\n15= Illusionista"+
+        "\n16= Non truso";
     var ruolo = prompt("Che ruolo ha il player?"+ruoliPossibili);
     switch(ruolo) {
         case "1":
@@ -220,7 +374,9 @@ function createHtmlImgCode(n){
 
 function saveCookie(info){
     // Aggiorna i cookie
-    document.cookie = "cookie_trusis_helper = "+ JSON.stringify(info);
+    var CookieDate = new Date();
+    CookieDate.setFullYear(CookieDate.getFullYear( ) +1);
+    document.cookie = "cookie_trusis_helper = "+ JSON.stringify(info)+ "; expires=" + CookieDate.toGMTString( ) + ";";
 }
 
 function restoreCookie() {
@@ -296,7 +452,7 @@ function addRolePlayer(playerHtmlElement, ruolo){
     }
 }
 
-function html_note_code( player_code ){
+function html_note_code( l ){
     // Restituisce l'html del pannello per le note
     var htl_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/htl.png";
     var ht_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/ht.png";
@@ -306,22 +462,62 @@ function html_note_code( player_code ){
     var hbl_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/hbl.png";
     var hb_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/hb.png";
     var hbr_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/hbr.png";
+    var home_img_link = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/home_helper.png";
+
+    var player_code_note = trusis_helper_note( l );
+    var player_code_ruoli = trusis_helper_ruoli( l );
+    var player_code_bluff = trusis_helper_bluff( l );
 
     var html_code = '<table class="home_helper">'
     + '<tbody>'
     + '<tr>'
     + '<td class="home_tl" style="background: url('+htl_link+') no-repeat left bottom;"></td>'
-    + '<td class="home_t" style="background: url('+ht_link+') repeat-x left bottom;"><img id="helper_note" src="https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/home_helper.png" /></td>'
+    + '<td class="home_t" style="background: url('+ht_link+') repeat-x left bottom;"><img id="helper_note" src="'+ home_img_link +'" /></td>'
     + '<td class="home_tr" style="background: url('+htr_link+') no-repeat right bottom;"></td>'
     + '</tr>'
     + '<tr>'
     + '<td class="home_l" style="background: url('+hl_link+');"></td>'
     + '<th class="home_c">'
     + '<div class="home_helper_element" style="display: none;">'
-    + player_code
+    +'<div class="tabberlive" id="tabber">'
+    +'    <ul class="tabbernav">'
+    +'        <li class="" id="tab_d">'
+    +'            <a href="javascript:void(null);" title="Dichiarato" id="tab_d">Dichiarato</a>'
+    +'        </li>'
+    +'        <li class="" id="tab_b">'
+    +'            <a href="javascript:void(null);" title="Bluff" id="tab_b">Bluff</a>'
+    +'        </li>'
+    +'        <li class="tabberactive" id="tab_n">'
+    +'            <a href="javascript:void(null);" title="Note" id="tab_n">Note</a>'
+    +'        </li>'
+    +'    </ul>'
+    +'    <div class="tabbertab tabbertabhide" id="tab1" title="">'
+    +'        <table>'
+    +'            <tbody>'
+    + player_code_ruoli
+    +'            </tbody>'
+    +'        </table>'
+    +'  </div>'
+    +'    <div class="tabbertab tabbertabhide" id="tab2" title="">'
+    +'        <table>'
+    +'            <tbody>'
+    + player_code_bluff
+    +'            </tbody>'
+    +'        </table>'
+    +'    </div>'
+    +'    <div class="tabbertab" id="tab3" title="">'
+    +'        <table>'
+    +'            <tbody> '
+    + player_code_note
+    +'            </tbody>'
+    +'        </table>'
+    +'    </div>'
+    +'</div>'
     + '<div style="display: flex; flex-grow: 1; width: 100%; list-style-type: none;">'
-    + '<button style="margin: 0 auto; border-radius:6px; width:100px; background-color: #112; color: #AEAEAE; border: 0; padding: 4px 7px; text-align:center;" id="save_note_helper">Salva</button>'
-    + '<button style="margin: 0 auto; border-radius:6px; width:100px; background-color: #112; color: #AEAEAE; border: 0; padding: 4px 7px; text-align:center;" id="export_note_helper">Esporta</button></div>'
+    + '<button style="margin: 0 auto; border-radius:6px; width:100px; background-color: #112; color: #AEAEAE; border: 0; padding: 4px 7px; text-align:center;" id="save_note_helper">'
+    + 'Salva</button>'
+    + '<button style="margin: 0 auto; border-radius:6px; width:100px; background-color: #112; color: #AEAEAE; border: 0; padding: 4px 7px; text-align:center;" id="export_note_helper">'
+    + 'Esporta</button></div>'
     + '</div>'
     + '</th>'
     + '<td class="home_r" style="background: url('+hr_link+');"></td>'
@@ -336,7 +532,8 @@ function html_note_code( player_code ){
     + '</tbody>'
     + '</table>';
 
-    return html_code;
+    var html_player_alive = document.getElementsByClassName('home');
+    $(html_code).insertAfter(html_player_alive);
 }
 
 function trusis_helper_note( l ){
@@ -370,16 +567,13 @@ function trusis_helper_note( l ){
             + '<li style="flex-grow: 1; vertical-align:middle; padding-left:10px; padding-top:5px; width: 30px;">'
             + '<a href="'+tempNick_link+'">'+tempNick+'</a>'
             + '</li><li style="flex-grow: 3; vertical-align:middle; padding-left:10px; padding-right: 20px; margin-top:-2px; ">'
-            + '<textarea class="trusis_helper_note" id="'
+            + '<textarea class="trusis_helper_note" id="note_'
             + tempNick.replace(" ", "_")
             + '" style="resize:none; width: 100%; border-radius: 10px; background-color: #346; padding-left: 10px; color: #CDF; margin: 0px 0px -20px 0px;">'
             + note
             + '</textarea></li></div><br>';
     }
-    var html_code = html_note_code( stringHtml );
-
-    var html_player_alive = document.getElementsByClassName('home');
-    $(html_code).insertAfter(html_player_alive);
+    return stringHtml;
 }
 
 function save_note_helper( l ){
@@ -388,17 +582,34 @@ function save_note_helper( l ){
     for (var i = 0; i < lista.length; i++) {
         var tempCard = lista[i].getElementsByClassName('avatar_name');
         var tempNick = $(tempCard).children('a.nowrap').text();
-        var textarea_area_element = "textarea#"+tempNick.replace(" ", "_");
-        var temp_note = $(textarea_area_element).val();
-        if ( typeof temp_note !== 'undefined'){
+        var textarea_area_element_note = "textarea#note_"+tempNick.replace(" ", "_");
+        var textarea_area_element_ruolo = "textarea#ruoli_"+tempNick.replace(" ", "_");
+        var textarea_area_element_bluff = "textarea#bluff_"+tempNick.replace(" ", "_");
+        var temp_note = $(textarea_area_element_note).val();
+        var temp_ruolo = $(textarea_area_element_ruolo).val();
+        var temp_bluff = $(textarea_area_element_bluff).val();
+        if ( typeof temp_note !== 'undefined' || temp_ruolo !== 'undefined' || temp_bluff!== 'undefined'){
             var check = true;
             for(var j = 0; j < l.length; j++){
                 if(l[j][0] === tempNick.replace(" ", "_")){
                     if ( l.length <= 2 ){
                         l[j].splice(2, 0, temp_note);
+                        l[j].splice(4, 0 ,temp_ruolo);
+                        l[j].splice(5, 0 ,temp_bluff);
                     }
                     else{
                         l[j][2] = temp_note;
+                        if ( l.length <= 4 ){
+                            l[j].splice(4, 0 ,temp_ruolo);
+                            l[j].splice(5, 0 ,temp_bluff);
+                        }else{
+                            l[j][4] = temp_ruolo;
+                            if ( l.length <= 5 ){
+                                l[j].splice(5, 0 ,temp_bluff);
+                            }else{
+                                l[j][5] = temp_bluff;
+                            }
+                        }
                     }
                     check = false;
                     break;
@@ -406,7 +617,7 @@ function save_note_helper( l ){
             }
             if (check){
                 // Controllo che non sia una nuova informazione
-                new_value_with_note = [tempNick.replace(" ", "_"), "", temp_note];
+                new_value_with_note = [tempNick.replace(" ", "_"), "", temp_note, "", temp_ruolo];
                 l.push(new_value_with_note);
             }
         }
@@ -444,12 +655,12 @@ function get_color_chat (list_cookie, nickname){
     for (var i=0; i<list_cookie.length; i++){
         var element_list = list_cookie[i];
         if (nick === element_list[0]){
-            if( typeof element_list[3] !== 'undefined' ){
+            if( typeof element_list[3] !== 'undefined' && element_list[3] !== ''){
                 // Restituisce il colore impostato
                 return element_list[3];
             }else{
                 // Colore di default
-                return "AAC";
+                return "#AAC";
             }
         }
     }
@@ -463,7 +674,7 @@ function addColorToCookieList (list_cookie, id, colore){
     for (var i =0; i< list_cookie.length; i++) {
         var cookie_element = list_cookie[i];
         if (cookie_element[0] === nick){
-            if (cookie_element.length == 4){
+            if (cookie_element.length >= 4){
                 cookie_element[3] = colore;
                 return list_cookie;
             }else{
@@ -483,4 +694,123 @@ function set_color_chat_all(list_cookie){
             set_color_chat (id, element_list[3]);
         }
     }
+}
+
+function link_to_player_tag(){
+    var lista = document.getElementsByClassName('avatar');
+    var search = [];
+    var lista_nick_link = [];
+    for (var i = 0; i < lista.length; i++) {
+        var tempCard = lista[i].getElementsByClassName('avatar_name');
+        var tempNick = $(tempCard).children('a.nowrap').text();
+        search.push(tempNick.replace(" ", "_"));
+        var tempNick_link = $(tempCard).children('a.nowrap').attr('href');
+        lista_nick_link.push(tempNick_link);
+    }
+
+    var lista_mex = document.getElementsByClassName('chat_message');
+    for (i=0; i<lista_mex.length; i++){
+        var text_mex = $(lista_mex[i]).text();
+        for(var j = 0; j<search.length; j++){
+            var nick_tag = "@"+search[j].replace(" ", "_");
+            var author_mex = text_mex.split(":")[1].substring(4);
+            //var auth_num = search.indexOf(message_author.replace(" ", "_"));
+            //var message_with_link = text_mex.replace(message_author, "<a href='"+ lista_nick_link[auth_num] +"'>"+ message_author +"</a>");
+            //var message_with_link = text_mex.replace(nick_tag, "<a href='"+ lista_nick_link[j] +"'>"+ nick_tag +"</a>");
+            if (text_mex.indexOf(nick_tag) >= 0 && $(lista_mex[i]).children('a').text() != nick_tag ){
+                message_with_link = text_mex.replace(nick_tag, "<a href='"+ lista_nick_link[j] +"'>"+ nick_tag +"</a>");
+                $( lista_mex[i] ).html( message_with_link );
+            }
+        }
+    }
+}
+
+function trusis_helper_ruoli( l ){
+    // Lista di tutti gli elementi con la classe 'avatar_name'
+    var lista = document.getElementsByClassName('avatar');
+    var stringHtml = "";
+    var first_dead = "";
+    for (var i = 0; i < lista.length; i++) {
+        var tempCard = lista[i].getElementsByClassName('avatar_name');
+        var cimitero = $(tempCard).parent().hasClass( "avatar_dead" );
+        if (cimitero === true && first_dead === ""){
+            stringHtml += '<div style="display: flex; flex-grow:1; width:100%; list-style-type:none;">'
+                +'<li style="text-align: center; margin-left: 40%; ">! ---- Cimitero ---- !</li>'
+                +'</div>';
+            first_dead = "found";
+        }
+        var tempNick = $(tempCard).children('a.nowrap').text();
+        var tempNick_link = $(tempCard).children('a.nowrap').attr('href');
+        var note = "";
+            for(var j = 0; j < l.length; j++){
+                if( l[j].length >2 && l[j][0] === tempNick.replace(" ", "_")){
+                    if( typeof l[j][4] !== 'undefined'){
+                        note = l[j][4];
+                    }else{
+                        note = "";
+                    }
+                    break;
+                }
+            }
+
+        stringHtml += '<div style="display: flex; flex-grow: 1; width: 100%; list-style-type: none;">'
+            + '<li style="flex-grow: 1; vertical-align:middle; padding-left:10px; padding-top:5px; width: 30px;">'
+            + '<a href="'+tempNick_link+'">'+tempNick+'</a>'
+            + '</li><li style="flex-grow: 3; vertical-align:middle; padding-left:10px; padding-right: 20px; margin-top:-2px; ">'
+            + '<textarea class="trusis_helper_ruoli" id="ruoli_'
+            + tempNick.replace(" ", "_")
+            + '" style="resize:none; width: 100%; border-radius: 10px; background-color: #346; padding-left: 10px; color: #CDF; margin: 0px 0px -20px 0px;">'
+            + note
+            + '</textarea></li></div><br>';
+    }
+    return stringHtml;
+}
+
+function trusis_helper_bluff( l ){
+    // Lista di tutti gli elementi con la classe 'avatar_name'
+    var lista = document.getElementsByClassName('avatar');
+    var stringHtml = "";
+    var first_dead = "";
+    for (var i = 0; i < lista.length; i++) {
+        var tempCard = lista[i].getElementsByClassName('avatar_name');
+        var cimitero = $(tempCard).parent().hasClass( "avatar_dead" );
+        if (cimitero === true && first_dead === ""){
+            stringHtml += '<div style="display: flex; flex-grow:1; width:100%; list-style-type:none;">'
+                +'<li style="text-align: center; margin-left: 40%; ">! ---- Cimitero ---- !</li>'
+                +'</div>';
+            first_dead = "found";
+        }
+        var tempNick = $(tempCard).children('a.nowrap').text();
+        var tempNick_link = $(tempCard).children('a.nowrap').attr('href');
+        var bluff = "";
+        for(var j = 0; j < l.length; j++){
+            if( l[j].length >2 && l[j][0] === tempNick.replace(" ", "_")){
+                if( typeof l[j][5] !== 'undefined'){
+                    bluff = l[j][5];
+                }else{
+                    bluff = "";
+                }
+                break;
+            }
+        }
+
+        stringHtml += '<div style="display: flex; flex-grow: 1; width: 100%; list-style-type: none;">'
+            + '<li style="flex-grow: 1; vertical-align:middle; padding-left:10px; padding-top:5px; width: 30px;">'
+            + '<a href="'+tempNick_link+'">'+tempNick+'</a>'
+            + '</li><li style="flex-grow: 3; vertical-align:middle; padding-left:10px; padding-right: 20px; margin-top:-2px; ">'
+            + '<textarea class="trusis_helper_ruoli" id="bluff_'
+            + tempNick.replace(" ", "_")
+            + '" style="resize:none; width: 100%; border-radius: 10px; background-color: #346; padding-left: 10px; color: #CDF; margin: 0px 0px -20px 0px;">'
+            + bluff
+            + '</textarea></li></div><br>';
+    }
+    return stringHtml;
+}
+
+function trusis_helper_navbar (){
+    var link_helper_bar_ico = "https://raw.githubusercontent.com/Jacopo1891/Trusis_Helper/master/img/trusis_helper_info.png";
+    var helper_navbar = '<img src="'+ link_helper_bar_ico +'" alt="Helper_Info" title="Trusis Helper Info" style="" class="mobile_menu_item" id="info_trusis_helper">';
+    var html_trusis_bar = document.getElementById('functionBar');
+    $( html_trusis_bar ).append( helper_navbar );
+
 }
