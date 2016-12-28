@@ -1,4 +1,4 @@
-th_class_body{
+body{
   color:white; 
   font-size:85%, 
   font-family: 'Cabin', Helvetica, Arial, sans-serif;
@@ -9,4 +9,12 @@ th_class_body{
 a{
   font-weight: bold; 
   color: #9F0;
+}
+
+div.th_title_info{
+  align:center;
+ } 
+div.th_info{
+  margin: 5;
+  align:center;
 }
