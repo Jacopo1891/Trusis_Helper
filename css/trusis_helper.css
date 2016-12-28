@@ -1,4 +1,4 @@
-body.th_body{
+body.t_helper{
   color:white; 
   font-size:85%, 
   font-family: 'Cabin', Helvetica, Arial, sans-serif;
@@ -12,9 +12,10 @@ a{
 }
 
 div.th_title_info{
-  align:center;
+  text-align:center;
+  font-size:110%;
  } 
 div.th_info{
   margin: 5;
-  align:center;
+  text-align:center;
 }
