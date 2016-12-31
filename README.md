@@ -15,7 +15,7 @@ Installazione
 -------
 
 - Installare Tampermonkey sul broswer. ( <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=it">Chrome</a> , <a href="https://addons.mozilla.org/it/firefox/addon/tampermonkey/">Firefox</a> , <a href="https://safari.tampermonkey.net/tampermonkey.safariextz">Safari</a> , <a
-href="https://addons.opera.com/it/extensions/details/tampermonkey-beta/">Opera</a>) 
+href="https://addons.opera.com/it/extensions/details/tampermonkey-beta/">Opera</a>)
 - Installare su Tampermonkey Trusis_Helper ( <a class="minibutton" href="https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js">Clicca qui</a> )
 
 ** Se al momento della ricerca di una partita non si visualizza l'elenco disabilitare temporaneamente il plugin da Tampermonkey.
@@ -27,6 +27,8 @@ Come funziona
 
 ChangeLog
 -------
+- v 0.165 Bugfix e inserimento sondaggio
+- v 0.164 Nuova funzione per il tag dei giocatori e pannello "note" migliorato
 - v 0.163 Bug fix chat con colori personalizzati
 - v 0.162 NUOVA FUNZIONE: Chat con colori personalizzati
 - v 0.161 Bug fix note e ruoli

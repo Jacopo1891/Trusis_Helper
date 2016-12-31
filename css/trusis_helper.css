@@ -18,3 +18,7 @@ div.th_title_info{
 div.th_info{
   margin: 5;
 }
+
+div.th_info_center{
+  text-align:center;
+}

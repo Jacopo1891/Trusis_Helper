@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             trusis-helper
 // @name           TRUSIS HELPER: Helper per il gioco online Trusis (trusis.it)
-// @version        0.164
+// @version        0.165
 // @author         Jacopo1891
 // @namespace
 // @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
@@ -142,7 +142,7 @@ $(window).on("load", function() {
         }
         else if (e.id == "info_trusis_helper"){
             var w = 315;
-            var h = 300;
+            var h = 320;
             var l = Math.floor((screen.width-w)/2);
             var t = Math.floor((screen.height-h)/2);
             var stili = "top=10, left=10, width="+w+", height="+h+",top=" + t + ",left=" + l +" status=no, menubar=no, toolbar=no scrollbars=no resizable=no";
@@ -150,7 +150,7 @@ $(window).on("load", function() {
 
             testo.document.write("<html>");
             testo.document.write("<head>");
-            testo.document.write("<title>Trusis Helper - Info</title>");
+            testo.document.write("<title>Info</title>");
             testo.document.write("<link rel='stylesheet' type='text/css' href='"+ trusis_helper_css +"'>");
             testo.document.write("</head>");
             testo.document.write("<body class='t_helper'>");
@@ -159,6 +159,10 @@ $(window).on("load", function() {
             testo.document.write("<div class='th_info'>@Versione: 0.164 ~ <a href='"+ url_update +"' target='_blank'>Ultima versione</a> </div>");
             testo.document.write("<div class='th_info'>@News: <a href='/tag/TrusisHelper' target='_blank'>#TrusisHelper</a></div>");
             testo.document.write("<div class='th_info'>Per consigli o suggerimenti contattatemi su Trusis con il mio alias o chiedete di me nel gruppo fb!</div>");
+            testo.document.write("<div class='th_info th_info_center'>\n----------------------------\n</div>");
+            testo.document.write("<div class='th_info th_info_center'>Vuoi migliorare TrusisHelper?</div>");
+            testo.document.write("<div class='th_info th_info_center'><a href='https://goo.gl/WKihbh' target='_blank'>Compila il form e dimmi la tua!</a></div>");
+            testo.document.write("<div class='th_info th_info_center'>\n----------------------------\n</div>");
             testo.document.write("<div class='th_info'>\n\n</div>");
             testo.document.write("<div class='th_info'>* A causa del plug-in il gioco potrebbe risultare leggermente rallentato: è normale, dipende dalle funzioni aggiunte! *</div>");
             testo.document.write("</body>\n");
