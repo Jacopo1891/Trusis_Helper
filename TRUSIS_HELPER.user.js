@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             trusis-helper
 // @name           TRUSIS HELPER: Helper per il gioco online Trusis (trusis.it)
-// @version        0.165
+// @version        0.166
 // @author         Jacopo1891
 // @namespace
 // @updateURL      https://github.com/Jacopo1891/Trusis_Helper/raw/master/TRUSIS_HELPER.user.js
@@ -63,7 +63,7 @@ $(window).on("load", function() {
                     // Setto la card
                     addRolePlayer(tempCard, ruolo);
                     // Aggiorno la lista dei player "etichettati"
-                    var temp_list = [tempNick.replace(" ", "_") , ruolo];
+                    var temp_list = [tempNick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_") , ruolo];
                     trusis_helper_list = addToCookieList (trusis_helper_list, temp_list);
                     // Salvo sui Cookie
                     saveCookie(trusis_helper_list);
@@ -179,12 +179,12 @@ $(window).on("load", function() {
     for (var i = 0; i < lista.length; i++) {
         var tempCard = lista[i].getElementsByClassName('avatar_name');
         var tempNick = $(tempCard).children('a.nowrap').text();
-        availableTags.push("@"+tempNick.replace(" ", "_"));
+        availableTags.push("@"+tempNick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_"));
         var colore = get_color_chat(trusis_helper_list, tempNick);
         /*if (colore === ""){
             colore = "#AAC";
         }*/
-        $('#color_'+tempNick.replace(" ", "_")).spectrum({
+        $('#color_'+tempNick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_")).spectrum({
             color: colore,
             showPaletteOnly: true,
             togglePaletteOnly: true,
@@ -404,7 +404,7 @@ function addToCookieList (list_cookie , element){
     // Aggiunge informazioni alla lista
     for (var i =0; i< list_cookie.length; i++) {
         var cookie_element = list_cookie[i];
-        if (cookie_element[0] == element[0].replace(" ", "_")){
+        if (cookie_element[0] == element[0].replace(/[^a-z\d\s]+/gi, "").replace(" ", "_")){
             cookie_element[1] = element[1];
             return list_cookie;
         }
@@ -422,7 +422,7 @@ function restoreRole( lista_ruoli_cookie ){
             var tempCard = $(lista.item(i)).children('div.avatar_name, div#m_.avatar_name.an_vote');
             var tempNick = $(tempCard).children('a.nowrap').text();
             var nickname = tempNick;
-            if (tempNick.replace(" ", "_") == temp[0]){
+            if (tempNick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_") == temp[0]){
                 var ruolo = temp[1];
                 // Setto la card
                 if (ruolo !== ""){
@@ -437,7 +437,7 @@ function removePlayer(list, nick){
     // Rimuove le informazioni salvate di uno giocatore dalla lista
     for (var i = 0; i< list.length; i++) {
         var list_element = list[i];
-        if (list_element[0] == nick.replace(" ", "_")){
+        if (list_element[0] == nick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_")){
             list_element[1] = "";
             return list;
         }
@@ -558,21 +558,21 @@ function trusis_helper_note( l ){
         var tempNick_link = $(tempCard).children('a.nowrap').attr('href');
         var note = "";
             for(var j = 0; j < l.length; j++){
-                if( l[j].length >2 && l[j][0] === tempNick.replace(" ", "_")){
+                if( l[j].length >2 && l[j][0] === tempNick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_")){
                     note = l[j][2];
                     break;
                 }
             }
 
         stringHtml += '<div style="display: flex; flex-grow: 1; width: 100%; list-style-type: none; id=color_"'
-            + tempNick.replace(" ", "_")
+            + tempNick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_")
             + '">'
-            + '<input type="text" id="color_'+ tempNick.replace(" ", "_") +'" />'
+            + '<input type="text" id="color_'+ tempNick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_") +'" />'
             + '<li style="flex-grow: 1; vertical-align:middle; padding-left:10px; padding-top:5px; width: 30px;">'
             + '<a href="'+tempNick_link+'">'+tempNick+'</a>'
             + '</li><li style="flex-grow: 3; vertical-align:middle; padding-left:10px; padding-right: 20px; margin-top:-2px; ">'
             + '<textarea class="trusis_helper_note" id="note_'
-            + tempNick.replace(" ", "_")
+            + tempNick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_")
             + '" style="resize:none; width: 100%; border-radius: 10px; background-color: #346; padding-left: 10px; color: #CDF; margin: 0px 0px -20px 0px;">'
             + note
             + '</textarea></li></div><br>';
@@ -586,16 +586,16 @@ function save_note_helper( l ){
     for (var i = 0; i < lista.length; i++) {
         var tempCard = lista[i].getElementsByClassName('avatar_name');
         var tempNick = $(tempCard).children('a.nowrap').text();
-        var textarea_area_element_note = "textarea#note_"+tempNick.replace(" ", "_");
-        var textarea_area_element_ruolo = "textarea#ruoli_"+tempNick.replace(" ", "_");
-        var textarea_area_element_bluff = "textarea#bluff_"+tempNick.replace(" ", "_");
+        var textarea_area_element_note = "textarea#note_"+tempNick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_");
+        var textarea_area_element_ruolo = "textarea#ruoli_"+tempNick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_");
+        var textarea_area_element_bluff = "textarea#bluff_"+tempNick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_");
         var temp_note = $(textarea_area_element_note).val();
         var temp_ruolo = $(textarea_area_element_ruolo).val();
         var temp_bluff = $(textarea_area_element_bluff).val();
         if ( typeof temp_note !== 'undefined' || temp_ruolo !== 'undefined' || temp_bluff!== 'undefined'){
             var check = true;
             for(var j = 0; j < l.length; j++){
-                if(l[j][0] === tempNick.replace(" ", "_")){
+                if(l[j][0] === tempNick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_")){
                     if ( l.length <= 2 ){
                         l[j].splice(2, 0, temp_note);
                         l[j].splice(4, 0 ,temp_ruolo);
@@ -621,7 +621,7 @@ function save_note_helper( l ){
             }
             if (check){
                 // Controllo che non sia una nuova informazione
-                new_value_with_note = [tempNick.replace(" ", "_"), "", temp_note, "", temp_ruolo];
+                new_value_with_note = [tempNick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_"), "", temp_note, "", temp_ruolo];
                 l.push(new_value_with_note);
             }
         }
@@ -655,7 +655,7 @@ function set_color_chat (id, colore){
 }
 
 function get_color_chat (list_cookie, nickname){
-    var nick = nickname.replace(" ", "_");
+    var nick = nickname.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_");
     for (var i=0; i<list_cookie.length; i++){
         var element_list = list_cookie[i];
         if (nick === element_list[0]){
@@ -707,7 +707,7 @@ function link_to_player_tag(){
     for (var i = 0; i < lista.length; i++) {
         var tempCard = lista[i].getElementsByClassName('avatar_name');
         var tempNick = $(tempCard).children('a.nowrap').text();
-        search.push(tempNick.replace(" ", "_"));
+        search.push(tempNick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_"));
         var tempNick_link = $(tempCard).children('a.nowrap').attr('href');
         lista_nick_link.push(tempNick_link);
     }
@@ -716,9 +716,9 @@ function link_to_player_tag(){
     for (i=0; i<lista_mex.length; i++){
         var text_mex = $(lista_mex[i]).text();
         for(var j = 0; j<search.length; j++){
-            var nick_tag = "@"+search[j].replace(" ", "_");
+            var nick_tag = "@"+search[j].replace(/[^a-z\d\s]+/gi, "").replace(" ", "_");
             var author_mex = text_mex.split(":")[1].substring(4);
-            //var auth_num = search.indexOf(message_author.replace(" ", "_"));
+            //var auth_num = search.indexOf(message_author.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_"));
             //var message_with_link = text_mex.replace(message_author, "<a href='"+ lista_nick_link[auth_num] +"'>"+ message_author +"</a>");
             //var message_with_link = text_mex.replace(nick_tag, "<a href='"+ lista_nick_link[j] +"'>"+ nick_tag +"</a>");
             if (text_mex.indexOf(nick_tag) >= 0 && $(lista_mex[i]).children('a').text() != nick_tag ){
@@ -747,7 +747,7 @@ function trusis_helper_ruoli( l ){
         var tempNick_link = $(tempCard).children('a.nowrap').attr('href');
         var note = "";
             for(var j = 0; j < l.length; j++){
-                if( l[j].length >2 && l[j][0] === tempNick.replace(" ", "_")){
+                if( l[j].length >2 && l[j][0] === tempNick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_")){
                     if( typeof l[j][4] !== 'undefined'){
                         note = l[j][4];
                     }else{
@@ -762,7 +762,7 @@ function trusis_helper_ruoli( l ){
             + '<a href="'+tempNick_link+'">'+tempNick+'</a>'
             + '</li><li style="flex-grow: 3; vertical-align:middle; padding-left:10px; padding-right: 20px; margin-top:-2px; ">'
             + '<textarea class="trusis_helper_ruoli" id="ruoli_'
-            + tempNick.replace(" ", "_")
+            + tempNick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_")
             + '" style="resize:none; width: 100%; border-radius: 10px; background-color: #346; padding-left: 10px; color: #CDF; margin: 0px 0px -20px 0px;">'
             + note
             + '</textarea></li></div><br>';
@@ -788,7 +788,7 @@ function trusis_helper_bluff( l ){
         var tempNick_link = $(tempCard).children('a.nowrap').attr('href');
         var bluff = "";
         for(var j = 0; j < l.length; j++){
-            if( l[j].length >2 && l[j][0] === tempNick.replace(" ", "_")){
+            if( l[j].length >2 && l[j][0] === tempNick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_")){
                 if( typeof l[j][5] !== 'undefined'){
                     bluff = l[j][5];
                 }else{
@@ -803,7 +803,7 @@ function trusis_helper_bluff( l ){
             + '<a href="'+tempNick_link+'">'+tempNick+'</a>'
             + '</li><li style="flex-grow: 3; vertical-align:middle; padding-left:10px; padding-right: 20px; margin-top:-2px; ">'
             + '<textarea class="trusis_helper_ruoli" id="bluff_'
-            + tempNick.replace(" ", "_")
+            + tempNick.replace(/[^a-z\d\s]+/gi, "").replace(" ", "_")
             + '" style="resize:none; width: 100%; border-radius: 10px; background-color: #346; padding-left: 10px; color: #CDF; margin: 0px 0px -20px 0px;">'
             + bluff
             + '</textarea></li></div><br>';

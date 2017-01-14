@@ -27,6 +27,7 @@ Come funziona
 
 ChangeLog
 -------
+- v 0.166 Bugfix (Nick con caratteri speciali)
 - v 0.165 Bugfix e inserimento sondaggio
 - v 0.164 Nuova funzione per il tag dei giocatori e pannello "note" migliorato
 - v 0.163 Bug fix chat con colori personalizzati
